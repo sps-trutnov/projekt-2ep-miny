@@ -50,9 +50,18 @@
                     }
                     Console.WriteLine();
                 }
-                
+                for (int y = 0; y < 2; y++)
+                {
+                    for (int x = 0; x < 3; x++)
+                    {
+                        Console.Write(Maska[y, x]);
+                    }
+                    Console.WriteLine();
+                }
 
-                
+
+
+
                 stavHry = InterakceSUzivatelem();
 
             }
@@ -80,7 +89,31 @@
 
         static StavHry InterakceSUzivatelem()
         {
-            throw new NotImplementedException();
+            Console.Write("Stiskni klávesu");
+            ConsoleKeyInfo klavesa = Console.ReadKey();
+            Console.WriteLine();
+            if (klavesa.Key == ConsoleKey.RightArrow)
+            {
+                Console.WriteLine("Levá klávesa");         
+                if (KurzorX <= MinovePole.GetLength(0) && KurzorX >= 0 )
+                {
+                    KurzorX += 1;
+                }
+                Console.WriteLine(KurzorX);
+
+            }
+
+            if (klavesa.Key == ConsoleKey.LeftArrow)
+            {
+                Console.WriteLine("Levá klávesa");
+                if (KurzorX <= MinovePole.GetLength(0) +1 && KurzorX >= 0)
+                {
+                    KurzorX -= 1;
+                }
+                Console.WriteLine(KurzorX);
+
+            }
+            return StavHry.Bezi;
         }
 
         static void ZobrazitKurzor()
