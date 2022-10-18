@@ -94,25 +94,46 @@
             Console.WriteLine();
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
-                Console.WriteLine("Levá klávesa");         
-                if (KurzorX <= MinovePole.GetLength(0) && KurzorX >= 0 )
+                Console.WriteLine("Pravá klávesa");         
+                if (KurzorX < MinovePole.GetLength(0) && KurzorX >= 0 )
                 {
                     KurzorX += 1;
                 }
-                Console.WriteLine(KurzorX);
+                Console.WriteLine("x:" + KurzorX);
 
             }
 
             if (klavesa.Key == ConsoleKey.LeftArrow)
             {
                 Console.WriteLine("Levá klávesa");
-                if (KurzorX <= MinovePole.GetLength(0) +1 && KurzorX >= 0)
+                if (KurzorX <= MinovePole.GetLength(0) && KurzorX >= 0)
                 {
                     KurzorX -= 1;
                 }
-                Console.WriteLine(KurzorX);
-
+                Console.WriteLine("x:" + KurzorX);
             }
+            
+            if (klavesa.Key == ConsoleKey.DownArrow)
+            {
+                Console.WriteLine("Dolní klávesa");
+                if (KurzorY < MinovePole.GetLength(0) && KurzorY >= 0)
+                {
+                    KurzorY += 1;
+                }
+                Console.WriteLine("y:" + KurzorY);
+            }
+
+            if (klavesa.Key == ConsoleKey.UpArrow)
+            {
+                Console.WriteLine("Horní klávesa");
+                if (KurzorY <= MinovePole.GetLength(0) && KurzorY >= 0)
+                {
+                    KurzorY -= 1;
+                }
+                Console.WriteLine("y:" + KurzorY);
+            }
+            
+
             return StavHry.Bezi;
         }
 
