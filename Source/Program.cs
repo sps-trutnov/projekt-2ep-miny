@@ -28,36 +28,34 @@
 
         static void Main(string[] args)
         {
-            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
-            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
-
-            VygenerovatHerniPlochu();
+            MinovePole = new int[2, 3] {
+                {0, 0, 0 },
+                {0, 0, 0 },
+            };
+            Maska = new TypPolicka[2, 3]
+            {
+                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
+                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
+            };
 
             StavHry stavHry = StavHry.Bezi;
-            DateTime casZacatku = DateTime.Now;
 
-            while(stavHry == StavHry.Bezi)
+            while (true)
             {
-                SmazatObrazovku();
-                ZobrazitNadpis();
+                for(int y = 0; y < 2; y++)
+                {
+                    for(int x = 0; x < 3; x++)
+                    {
+                        Console.Write(MinovePole[y, x]);
+                    }
+                    Console.WriteLine();
+                }
+                
 
-                ZobrazitHerniPlochu();
-                ZobrazitKurzor();
-
+                
                 stavHry = InterakceSUzivatelem();
+
             }
-
-            TimeSpan dobaHry = DateTime.Now - casZacatku;
-
-            ZobrazitTabulkuNejHracu();
-            ZobrazitDobuProbehleHry(dobaHry);
-
-            if(stavHry == StavHry.Vyhra)
-            {
-                ZapisDoTabulkyNejHracu(dobaHry);
-            }
-
-            ZobrazitRozlouceni();
         }
 
         static void VygenerovatHerniPlochu()
