@@ -95,7 +95,7 @@
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
                 Console.WriteLine("Pravá klávesa");         
-                if (KurzorX < MinovePole.GetLength(0) && KurzorX >= 0 )
+                if (KurzorX < MinovePole.GetLength(0) - 1 && KurzorX >= 0 )
                 {
                     KurzorX += 1;
                 }
@@ -106,7 +106,7 @@
             if (klavesa.Key == ConsoleKey.LeftArrow)
             {
                 Console.WriteLine("Levá klávesa");
-                if (KurzorX <= MinovePole.GetLength(0) && KurzorX >= 0)
+                if (KurzorX <= MinovePole.GetLength(1) && KurzorX > 0)
                 {
                     KurzorX -= 1;
                 }
@@ -116,7 +116,7 @@
             if (klavesa.Key == ConsoleKey.DownArrow)
             {
                 Console.WriteLine("Dolní klávesa");
-                if (KurzorY < MinovePole.GetLength(0) && KurzorY >= 0)
+                if (KurzorY < MinovePole.GetLength(1) - 1 && KurzorY >= 0)
                 {
                     KurzorY += 1;
                 }
@@ -126,7 +126,7 @@
             if (klavesa.Key == ConsoleKey.UpArrow)
             {
                 Console.WriteLine("Horní klávesa");
-                if (KurzorY <= MinovePole.GetLength(0) && KurzorY >= 0)
+                if (KurzorY <= MinovePole.GetLength(0) && KurzorY > 0)
                 {
                     KurzorY -= 1;
                 }
