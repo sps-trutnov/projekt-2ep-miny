@@ -1,4 +1,6 @@
-﻿namespace Miny
+﻿using System.Security.AccessControl;
+
+namespace Miny
 {
     internal class Program
     {
@@ -17,8 +19,8 @@
             Prohra,
         }
 
-        static readonly int SirkaHerniPlochy = 9;
-        static readonly int VyskaHerniPlochy = 9;
+        static readonly int SirkaHerniPlochy = 3;
+        static readonly int VyskaHerniPlochy = 3;
 
         static int[,] MinovePole;
         static TypPolicka[,] Maska;
@@ -28,15 +30,32 @@
 
         static void Main(string[] args)
         {
-            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
-            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
+            MinovePole = new int[3, 3] {
+                { -1, 1, 0 },
+                { 1, 1, 0 },
+                { 0, 0, 0 }
+            };
+            Maska = new TypPolicka[3, 3] {
+                { TypPolicka.Vlajka, TypPolicka.Odkryte, TypPolicka.Zakryte },
+                { TypPolicka.Zakryte, TypPolicka.Odkryte, TypPolicka.Zakryte },
+                { TypPolicka.Zakryte, TypPolicka.Zakryte, TypPolicka.Zakryte }
+            };
+
+
+
+            for (int x = 0; x < 3; x++)
+            {
+                Console.WriteLine(MinovePole[0, x]);
+            }
+
+            System.Environment.Exit(0);
 
             VygenerovatHerniPlochu();
 
             StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
 
-            while(stavHry == StavHry.Bezi)
+            while (stavHry == StavHry.Bezi)
             {
                 SmazatObrazovku();
                 ZobrazitNadpis();
@@ -52,7 +71,7 @@
             ZobrazitTabulkuNejHracu();
             ZobrazitDobuProbehleHry(dobaHry);
 
-            if(stavHry == StavHry.Vyhra)
+            if (stavHry == StavHry.Vyhra)
             {
                 ZapisDoTabulkyNejHracu(dobaHry);
             }
