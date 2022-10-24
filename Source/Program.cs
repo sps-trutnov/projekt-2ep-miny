@@ -31,68 +31,43 @@
             MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
             Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
-            VygenerovatHerniPlochu();
 
             StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
 
-            while(stavHry == StavHry.Bezi)
+            ZobrazitTabulkuNejHracu();
+
+            while (stavHry == StavHry.Bezi)
             {
-                SmazatObrazovku();
-                ZobrazitNadpis();
+                //SmazatObrazovku();
+                //ZobrazitNadpis();
 
-                ZobrazitHerniPlochu();
-                ZobrazitKurzor();
+                //ZobrazitHerniPlochu();
+                //ZobrazitKurzor();
 
-                stavHry = InterakceSUzivatelem();
+                //stavHry = InterakceSUzivatelem();
             }
 
             TimeSpan dobaHry = DateTime.Now - casZacatku;
 
-            ZobrazitTabulkuNejHracu();
-            ZobrazitDobuProbehleHry(dobaHry);
-
-            if(stavHry == StavHry.Vyhra)
-            {
-                ZapisDoTabulkyNejHracu(dobaHry);
-            }
-
             ZobrazitRozlouceni();
-        }
-
-        static void VygenerovatHerniPlochu()
-        {
-            throw new NotImplementedException();
-        }
-
-        static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
-        {
-            throw new NotImplementedException();
-        }
-
-        static void ZobrazitDobuProbehleHry(TimeSpan dobaHry)
-        {
-            throw new NotImplementedException();
         }
 
         static void ZobrazitTabulkuNejHracu()
         {
-            throw new NotImplementedException();
-        }
+            string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
+            
 
-        static StavHry InterakceSUzivatelem()
-        {
-            throw new NotImplementedException();
-        }
+            System.Console.WriteLine("Nejlepší hráči: ");
+            int Misto;
+            Misto = 1;
+            foreach (string line in lines)
+            {
+                Console.WriteLine(Misto + ". " + line);
+                Misto = Misto + 1;
+            }
 
-        static void ZobrazitKurzor()
-        {
-            throw new NotImplementedException();
-        }
 
-        static void ZobrazitHerniPlochu()
-        {
-            throw new NotImplementedException();
         }
 
         static void SmazatObrazovku()
