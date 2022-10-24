@@ -32,14 +32,15 @@
             Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
             VygenerovatHerniPlochu();
-            for(int i = 0; i<VyskaHerniPlochy; i++)
+            Console.WriteLine();
+            for (int vy = 0; vy < VyskaHerniPlochy; vy++)
             {
                 Console.WriteLine();
-                for (int j = 0; j < SirkaHerniPlochy; j++)
+                for (int vx = 0; vx < SirkaHerniPlochy; vx++)
                 {
-                    if(MinovePole[i, j] == -1) Console.Write(" ");
+                    if (MinovePole[vx, vy] == -1) Console.Write(" ");
                     else Console.Write("  ");
-                    Console.Write(MinovePole[i, j]);
+                    Console.Write(MinovePole[vx, vy]);
                 }
             }
 
@@ -84,10 +85,12 @@
                     z++;
                 }
             }
-            for(int a = 0; a < MinovePole.Length; a++)
+
+            for (int a = 0; a < MinovePole.Length; a++)
             {
-                int x = a / VyskaHerniPlochy;
-                int y = x / SirkaHerniPlochy;
+
+                int x = a % VyskaHerniPlochy;
+                int y = a / SirkaHerniPlochy;
                 if (MinovePole[(x % SirkaHerniPlochy), y] != -1)
                 {
                     if (y != 0 && y % VyskaHerniPlochy != VyskaHerniPlochy - 1)
