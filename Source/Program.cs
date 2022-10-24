@@ -32,6 +32,16 @@
             Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
             VygenerovatHerniPlochu();
+            for(int i = 0; i<VyskaHerniPlochy; i++)
+            {
+                Console.WriteLine();
+                for (int j = 0; j < SirkaHerniPlochy; j++)
+                {
+                    if(MinovePole[i, j] == -1) Console.Write(" ");
+                    else Console.Write("  ");
+                    Console.Write(MinovePole[i, j]);
+                }
+            }
 
             StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
@@ -63,22 +73,22 @@
         static void VygenerovatHerniPlochu()
         {
             Random nahoda = new Random();
-            int x = 0;
-            while(x<10)
+            int z = 0;
+            while(z<10)
             {
                 int Random_x = nahoda.Next(MinovePole.GetLength(0));
                 int Random_y = nahoda.Next(MinovePole.GetLength(1));
                 if(MinovePole[Random_x, Random_y] != -1)
                 {
                     MinovePole[Random_x, Random_y] = -1;
-                    x++;
+                    z++;
                 }
             }
-            x = 0;
-            while (x < MinovePole.Length)
+            for(int a = 0; a < MinovePole.Length; a++)
             {
+                int x = a / VyskaHerniPlochy;
                 int y = x / SirkaHerniPlochy;
-                if (MinovePole[x, y] != -1)
+                if (MinovePole[(x % SirkaHerniPlochy), y] != -1)
                 {
                     if (y != 0 && y % VyskaHerniPlochy != VyskaHerniPlochy - 1)
                     {
