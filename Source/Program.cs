@@ -32,18 +32,7 @@
             Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
             VygenerovatHerniPlochu();
-            Console.WriteLine();
-            for (int vy = 0; vy < VyskaHerniPlochy; vy++)
-            {
-                Console.WriteLine();
-                for (int vx = 0; vx < SirkaHerniPlochy; vx++)
-                {
-                    if (MinovePole[vx, vy] == -1) Console.Write(" ");
-                    else Console.Write("  ");
-                    Console.Write(MinovePole[vx, vy]);
-                }
-            }
-
+           
             StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
 
