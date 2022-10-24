@@ -42,9 +42,9 @@
 
             while (true)
             {
-                for(int y = 0; y < 2; y++)
+                for (int y = 0; y < 2; y++)
                 {
-                    for(int x = 0; x < 3; x++)
+                    for (int x = 0; x < 3; x++)
                     {
                         Console.Write(MinovePole[y, x]);
                     }
@@ -58,6 +58,8 @@
                     }
                     Console.WriteLine();
                 }
+
+
 
 
 
@@ -94,8 +96,8 @@
             Console.WriteLine();
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
-                Console.WriteLine("Pravá klávesa");         
-                if (KurzorX < MinovePole.GetLength(0) - 1 && KurzorX >= 0 )
+                Console.WriteLine("Pravá klávesa");
+                if (KurzorX < MinovePole.GetLength(0) - 1 && KurzorX >= 0)
                 {
                     KurzorX += 1;
                 }
@@ -112,7 +114,7 @@
                 }
                 Console.WriteLine("x:" + KurzorX);
             }
-            
+
             if (klavesa.Key == ConsoleKey.DownArrow)
             {
                 Console.WriteLine("Dolní klávesa");
@@ -126,13 +128,39 @@
             if (klavesa.Key == ConsoleKey.UpArrow)
             {
                 Console.WriteLine("Horní klávesa");
-                if (KurzorY <= MinovePole.GetLength(0) && KurzorY > 0)
+                if (KurzorY <= MinovePole.GetLength(1) && KurzorY > 1)
                 {
                     KurzorY -= 1;
                 }
                 Console.WriteLine("y:" + KurzorY);
             }
+
+            if (klavesa.Key == ConsoleKey.V)
+            {
+                Console.WriteLine("v");
+                if (Maska[KurzorY, KurzorX] == TypPolicka.Zakryte)
+                {
+                    Maska[KurzorY, KurzorX] = TypPolicka.Vlajka;
+                }
+
+                if (Maska[KurzorY, KurzorX] == TypPolicka.Vlajka)
+                {
+                    Maska[KurzorY, KurzorX] = TypPolicka.Zakryte;
+                }
+            }   
             
+            if (klavesa.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine("Enter");
+                if (Maska[KurzorY, KurzorX] == TypPolicka.Zakryte)
+                {
+                    Maska[KurzorY, KurzorX] = TypPolicka.Odkryte;
+                }
+            }
+
+
+            
+
 
             return StavHry.Bezi;
         }
