@@ -41,12 +41,22 @@ namespace Miny
                 { TypPolicka.Zakryte, TypPolicka.Zakryte, TypPolicka.Zakryte }
             };
 
-
-
-            for (int x = 0; x < 3; x++)
+            for (int y = 0; y < 3; y++) 
             {
-                Console.WriteLine(MinovePole[0, x]);
+                Console.WriteLine();
+                for(int x= 0; x < 3; x++)
+                {
+                    if (MinovePole[x, y] == -1) Console.Write(" ");
+                    else Console.Write("  ");
+                    Console.Write(MinovePole[x, y]);
+                    
+         
+
+                }
+                    
             }
+
+            
 
             System.Environment.Exit(0);
 
