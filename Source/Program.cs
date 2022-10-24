@@ -29,7 +29,7 @@
         static void Main(string[] args)
         {
             MinovePole = new int[2, 3] {
-                {0, 0, 0 },
+                {-1, 0, 0 },
                 {0, 0, 0 },
             };
             Maska = new TypPolicka[2, 3]
@@ -40,19 +40,19 @@
 
             StavHry stavHry = StavHry.Bezi;
 
-            while (true)
+            while (stavHry == StavHry.Bezi)
             {
-                for (int y = 0; y < 2; y++)
+                for (int y = 0; y < MinovePole.GetLength(0); y++)
                 {
-                    for (int x = 0; x < 3; x++)
+                    for (int x = 0; x < MinovePole.GetLength(1); x++)
                     {
                         Console.Write(MinovePole[y, x]);
                     }
                     Console.WriteLine();
                 }
-                for (int y = 0; y < 2; y++)
+                for (int y = 0; y < Maska.GetLength(0); y++)
                 {
-                    for (int x = 0; x < 3; x++)
+                    for (int x = 0; x < Maska.GetLength(1); x++)
                     {
                         Console.Write(Maska[y, x]);
                     }
@@ -65,7 +65,10 @@
 
 
                 stavHry = InterakceSUzivatelem();
-
+                if(stavHry == StavHry.Prohra)
+                {
+                    Console.WriteLine("prohra");
+                }
             }
         }
 
@@ -97,7 +100,7 @@
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
                 Console.WriteLine("Pravá klávesa");
-                if (KurzorX < MinovePole.GetLength(0) - 1 && KurzorX >= 0)
+                if (KurzorX < MinovePole.GetLength(1) - 1 && KurzorX >= 0)
                 {
                     KurzorX += 1;
                 }
@@ -118,7 +121,7 @@
             if (klavesa.Key == ConsoleKey.DownArrow)
             {
                 Console.WriteLine("Dolní klávesa");
-                if (KurzorY < MinovePole.GetLength(1) - 1 && KurzorY >= 0)
+                if (KurzorY < MinovePole.GetLength(0) - 1 && KurzorY >= 0)
                 {
                     KurzorY += 1;
                 }
@@ -128,7 +131,7 @@
             if (klavesa.Key == ConsoleKey.UpArrow)
             {
                 Console.WriteLine("Horní klávesa");
-                if (KurzorY <= MinovePole.GetLength(1) && KurzorY > 1)
+                if (KurzorY <= MinovePole.GetLength(0) && KurzorY > 0)
                 {
                     KurzorY -= 1;
                 }
@@ -155,9 +158,21 @@
                 if (Maska[KurzorY, KurzorX] == TypPolicka.Zakryte)
                 {
                     Maska[KurzorY, KurzorX] = TypPolicka.Odkryte;
+                    if (MinovePole[KurzorY, KurzorX] == -1)
+                    {
+                        return StavHry.Prohra;
+                    }
+                }
+                
+            }
+            for (int x = 0; x < MinovePole.GetLength(1); x++)
+            {
+               for (int y = 0; y < MinovePole.GetLength(0); y++)
+                {
+
+                    //if(x && y == )
                 }
             }
-
 
             
 
