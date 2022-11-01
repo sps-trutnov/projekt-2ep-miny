@@ -8,6 +8,7 @@
             Zakryte,
             Odkryte,
             Vlajka,
+            mina,
         }
 
         enum StavHry
@@ -46,19 +47,12 @@
 
             while (stavHry == StavHry.Bezi)
             {
-                for (int y = 0; y < MinovePole.GetLength(0); y++)
-                {
-                    for (int x = 0; x < MinovePole.GetLength(1); x++)
-                    {
-                        Console.Write(MinovePole[y, x]);
-                    }
-                    Console.WriteLine();
-                }
+                
                 for (int y = 0; y < Maska.GetLength(0); y++)
                 {
                     for (int x = 0; x < Maska.GetLength(1); x++)
                     {
-                        Console.Write(Maska[y, x]);
+                        Console.Write(Maska[y, x] + " ");
                     }
                     Console.WriteLine();
                 }
@@ -72,6 +66,14 @@
                 if(stavHry == StavHry.Prohra)
                 {
                     Console.WriteLine("prohra");
+                    for (int y = 0; y < Maska.GetLength(0); y++)
+                    {
+                        for (int x = 0; x < Maska.GetLength(1); x++)
+                        {
+                            Console.Write(Maska[y, x] + " ");
+                        }
+                        Console.WriteLine();
+                    }
                 }
 
                 if (stavHry == StavHry.Vyhra)
@@ -114,8 +116,14 @@
                 {
                     KurzorX += 1;
                 }
+                Console.WriteLine("y:" + KurzorY);
                 Console.WriteLine("x:" + KurzorX);
 
+            }
+
+            if (klavesa.Key == ConsoleKey.Escape)
+            {
+                Environment.Exit(0);
             }
 
             if (klavesa.Key == ConsoleKey.LeftArrow)
@@ -125,6 +133,7 @@
                 {
                     KurzorX -= 1;
                 }
+                Console.WriteLine("y:" + KurzorY);
                 Console.WriteLine("x:" + KurzorX);
             }
 
@@ -136,6 +145,7 @@
                     KurzorY += 1;
                 }
                 Console.WriteLine("y:" + KurzorY);
+                Console.WriteLine("x:" + KurzorX);
             }
 
             if (klavesa.Key == ConsoleKey.UpArrow)
@@ -146,6 +156,7 @@
                     KurzorY -= 1;
                 }
                 Console.WriteLine("y:" + KurzorY);
+                Console.WriteLine("x:" + KurzorX);
             }
 
             if (klavesa.Key == ConsoleKey.V)
@@ -171,6 +182,7 @@
                     Maska[KurzorY, KurzorX] = TypPolicka.Odkryte;
                     if (MinovePole[KurzorY, KurzorX] == -1)
                     {
+                        Maska[KurzorY, KurzorX] = TypPolicka.mina;
                         return StavHry.Prohra;
                     }
                 }
