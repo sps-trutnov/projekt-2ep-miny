@@ -61,7 +61,7 @@ namespace Miny
             System.Environment.Exit(0);
 
             VygenerovatHerniPlochu();
-
+           
             StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
 
@@ -91,7 +91,104 @@ namespace Miny
 
         static void VygenerovatHerniPlochu()
         {
-            throw new NotImplementedException();
+            Random nahoda = new Random();
+            int z = 0;
+            while(z<10)
+            {
+                int Random_x = nahoda.Next(MinovePole.GetLength(0));
+                int Random_y = nahoda.Next(MinovePole.GetLength(1));
+                if(MinovePole[Random_x, Random_y] != -1)
+                {
+                    MinovePole[Random_x, Random_y] = -1;
+                    z++;
+                }
+            }
+
+            for (int a = 0; a < MinovePole.Length; a++)
+            {
+
+                int x = a % VyskaHerniPlochy;
+                int y = a / SirkaHerniPlochy;
+                if (MinovePole[(x % SirkaHerniPlochy), y] != -1)
+                {
+                    if (y != 0 && y % VyskaHerniPlochy != VyskaHerniPlochy - 1)
+                    {
+                        if (x % SirkaHerniPlochy != 0 && x % SirkaHerniPlochy != SirkaHerniPlochy - 1)
+                        {
+                            if (MinovePole[x + 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y + 1] == -1) MinovePole[x, y]++;
+                        }
+                        else if (x % SirkaHerniPlochy == 0)
+                        {
+                            if (MinovePole[x + 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y + 1] == -1) MinovePole[x, y]++;
+                        }
+                        else if (x % SirkaHerniPlochy == SirkaHerniPlochy - 1)
+                        {
+                            if (MinovePole[x - 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y + 1] == -1) MinovePole[x, y]++;
+                        }
+                    }
+                    else if (y == 0)
+                    {
+                        if (x % SirkaHerniPlochy != 0 && x % SirkaHerniPlochy != SirkaHerniPlochy - 1)
+                        {
+                            if (MinovePole[x + 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y + 1] == -1) MinovePole[x, y]++;
+                        }
+                        else if (x % SirkaHerniPlochy == 0)
+                        {
+                            if (MinovePole[x + 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y + 1] == -1) MinovePole[x, y]++;
+                        }
+                        else if (x % SirkaHerniPlochy == SirkaHerniPlochy - 1)
+                        {
+                            if (MinovePole[x - 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y + 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y + 1] == -1) MinovePole[x, y]++;
+                        }
+                    }
+                    else if (y % SirkaHerniPlochy == SirkaHerniPlochy - 1)
+                    {
+                        if (x % SirkaHerniPlochy != 0 && x % SirkaHerniPlochy != SirkaHerniPlochy - 1)
+                        {
+                            if (MinovePole[x + 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y - 1] == -1) MinovePole[x, y]++;
+                        }
+                        else if (x % SirkaHerniPlochy == 0)
+                        {
+                            if (MinovePole[x + 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x + 1, y - 1] == -1) MinovePole[x, y]++;
+                        }
+                        else if (x % SirkaHerniPlochy == SirkaHerniPlochy - 1)
+                        {
+                            if (MinovePole[x - 1, y] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x, y - 1] == -1) MinovePole[x, y]++;
+                            if (MinovePole[x - 1, y - 1] == -1) MinovePole[x, y]++;
+                        }
+                    }
+                }
+            }
         }
 
         static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
