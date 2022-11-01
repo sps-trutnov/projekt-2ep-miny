@@ -35,6 +35,11 @@
             StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
 
+            TimeSpan dobaHry = DateTime.Now - casZacatku;
+
+            ZobrazitDobuProbehleHry(dobaHry);
+            ZobrazitTabulkuNejHracu();
+            ZapisDoTabulkyNejHracu(dobaHry);
             ZobrazitTabulkuNejHracu();
 
             while (stavHry == StavHry.Bezi)
@@ -48,7 +53,6 @@
                 //stavHry = InterakceSUzivatelem();
             }
 
-            TimeSpan dobaHry = DateTime.Now - casZacatku;
 
             ZobrazitRozlouceni();
         }
@@ -56,7 +60,6 @@
         static void ZobrazitTabulkuNejHracu()
         {
             string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
-            
 
             System.Console.WriteLine("Nejlepší hráči: ");
             int Misto;
@@ -66,8 +69,68 @@
                 Console.WriteLine(Misto + ". " + line);
                 Misto = Misto + 1;
             }
+            Console.WriteLine();
+        }
+
+        static void ZobrazitDobuProbehleHry(TimeSpan dobaHry)
+        {
+            Console.WriteLine("Hru jsi dohrál za: " + dobaHry);
+            Console.WriteLine();
+        }
+
+        static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
+        {
+            string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
+
+            string[] jmena = new string[lines.Length];
+            string[] casy = new string[lines.Length];
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] polozky = lines[i].Split(" ");
+                jmena.Append(polozky[0]);
+                casy.Append(polozky[1]);
+            }
+            Console.WriteLine(jmena);
+            Console.WriteLine(casy);
+
+            int mujCas = 5;
+            int[] tabHracu;
+            tabHracu = new int[] { 1, 2, 3, 6, 9 };
+
+            //   prvni proměnná; jak dlouho; i++ aby se postupně vše projelo
+            for (int i = 0; i < tabHracu.Length; i++)
+            {
+                if (mujCas < tabHracu[i])
+                {
+                    for (int p = i; p < tabHracu.Length - 1; p++)
+                    {
+                        int zachrana = tabHracu[p];
+                        tabHracu[p + 1] = zachrana;
+                    }
+                    tabHracu[i] = mujCas;
+                    break;
+                }
+            }
+            for (int i = 0; i < tabHracu.Length; i++)
+            {
+                Console.WriteLine(tabHracu[i]);
+            }
 
 
+
+            Console.Write("Zadejte své jméno: ");
+            string zadani = Console.ReadLine();
+
+            
+            string[] nejlepsiHraci =
+            
+            {
+                
+                zadani + " " + dobaHry,
+            };
+
+            File.WriteAllLines(@"TabulkaNejHracu.txt", nejlepsiHraci);
         }
 
         static void SmazatObrazovku()
