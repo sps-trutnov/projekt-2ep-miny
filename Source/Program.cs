@@ -8,7 +8,7 @@
             Zakryte,
             Odkryte,
             Vlajka,
-            mina,
+            _mina_,
         }
 
         enum StavHry
@@ -47,7 +47,9 @@
 
             while (stavHry == StavHry.Bezi)
             {
-                
+
+                Console.WriteLine("y:" + KurzorY);
+                Console.WriteLine("x:" + KurzorX);
                 for (int y = 0; y < Maska.GetLength(0); y++)
                 {
                     for (int x = 0; x < Maska.GetLength(1); x++)
@@ -56,6 +58,8 @@
                     }
                     Console.WriteLine();
                 }
+                Console.WriteLine();
+
 
 
 
@@ -65,7 +69,7 @@
                 stavHry = InterakceSUzivatelem();
                 if(stavHry == StavHry.Prohra)
                 {
-                    Console.WriteLine("prohra");
+                    Console.WriteLine("mapa");
                     for (int y = 0; y < Maska.GetLength(0); y++)
                     {
                         for (int x = 0; x < Maska.GetLength(1); x++)
@@ -74,10 +78,48 @@
                         }
                         Console.WriteLine();
                     }
+                    Console.WriteLine();
+                    Console.WriteLine("odkrytá mapa");
+                    
+                    for (int x = 0; x < MinovePole.GetLength(1); x++)
+                    {
+                        for (int y = 0; y < MinovePole.GetLength(0); y++)
+                        {
+                            if (MinovePole[y, x] == -1)
+                            {
+                                Maska[y, x] = TypPolicka._mina_;
+                            }
+                            if (MinovePole[y, x] == 0)
+                            {
+                                Maska[y, x] = TypPolicka.Odkryte;
+                            }
+                        }
+                    }
+                    for (int y = 0; y < Maska.GetLength(0); y++)
+                    {
+                        for (int x = 0; x < Maska.GetLength(1); x++)
+                        {
+                            Console.Write(Maska[y, x] + " ");
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("prohra");
                 }
+
 
                 if (stavHry == StavHry.Vyhra)
                 {
+                    Console.WriteLine("mapa");
+                    for (int y = 0; y < Maska.GetLength(0); y++)
+                    {
+                        for (int x = 0; x < Maska.GetLength(1); x++)
+                        {
+                            Console.Write(Maska[y, x] + " ");
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine();
                     Console.WriteLine("Výhra");
                 }
 
@@ -109,15 +151,16 @@
             Console.Write("Stiskni klávesu");
             ConsoleKeyInfo klavesa = Console.ReadKey();
             Console.WriteLine();
+            
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
+                Console.Clear();
                 Console.WriteLine("Pravá klávesa");
                 if (KurzorX < MinovePole.GetLength(1) - 1 && KurzorX >= 0)
                 {
                     KurzorX += 1;
                 }
-                Console.WriteLine("y:" + KurzorY);
-                Console.WriteLine("x:" + KurzorX);
+                
 
             }
 
@@ -128,39 +171,40 @@
 
             if (klavesa.Key == ConsoleKey.LeftArrow)
             {
+                Console.Clear();
                 Console.WriteLine("Levá klávesa");
                 if (KurzorX <= MinovePole.GetLength(1) && KurzorX > 0)
                 {
                     KurzorX -= 1;
                 }
-                Console.WriteLine("y:" + KurzorY);
-                Console.WriteLine("x:" + KurzorX);
+                
             }
 
             if (klavesa.Key == ConsoleKey.DownArrow)
             {
+                Console.Clear();
                 Console.WriteLine("Dolní klávesa");
                 if (KurzorY < MinovePole.GetLength(0) - 1 && KurzorY >= 0)
                 {
                     KurzorY += 1;
                 }
-                Console.WriteLine("y:" + KurzorY);
-                Console.WriteLine("x:" + KurzorX);
+                
             }
 
             if (klavesa.Key == ConsoleKey.UpArrow)
             {
+                Console.Clear();
                 Console.WriteLine("Horní klávesa");
                 if (KurzorY <= MinovePole.GetLength(0) && KurzorY > 0)
                 {
                     KurzorY -= 1;
                 }
-                Console.WriteLine("y:" + KurzorY);
-                Console.WriteLine("x:" + KurzorX);
+                
             }
 
             if (klavesa.Key == ConsoleKey.V)
             {
+                Console.Clear();
                 Console.WriteLine("v");
                 if (Maska[KurzorY, KurzorX] == TypPolicka.Zakryte)
                 {
@@ -176,18 +220,25 @@
             
             if (klavesa.Key == ConsoleKey.Enter)
             {
-                Console.WriteLine("Enter");
+                Console.Clear();
+                
                 if (Maska[KurzorY, KurzorX] == TypPolicka.Zakryte)
                 {
                     Maska[KurzorY, KurzorX] = TypPolicka.Odkryte;
                     if (MinovePole[KurzorY, KurzorX] == -1)
                     {
-                        Maska[KurzorY, KurzorX] = TypPolicka.mina;
+ 
                         return StavHry.Prohra;
                     }
                 }
                 
             }
+            else
+            {
+                Console.Clear();
+            }
+
+            
             for (int x = 0; x < MinovePole.GetLength(1); x++)
             {
                for (int y = 0; y < MinovePole.GetLength(0); y++)
