@@ -28,12 +28,16 @@
 
         static void Main(string[] args)
         {
-            MinovePole = new int[2, 3] {
+            MinovePole = new int[4, 3] {
                 {-1, 0, 0 },
                 {0, 0, 0 },
+                {-1, -1, 0 },
+                {-1, 0, 0 },
             };
-            Maska = new TypPolicka[2, 3]
+            Maska = new TypPolicka[4, 3]
             {
+                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
+                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
                 {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
                 {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
             };
@@ -69,6 +73,12 @@
                 {
                     Console.WriteLine("prohra");
                 }
+
+                if (stavHry == StavHry.Vyhra)
+                {
+                    Console.WriteLine("Výhra");
+                }
+
             }
         }
 
@@ -146,7 +156,8 @@
                     Maska[KurzorY, KurzorX] = TypPolicka.Vlajka;
                 }
 
-                if (Maska[KurzorY, KurzorX] == TypPolicka.Vlajka)
+
+                else if(Maska[KurzorY, KurzorX] == TypPolicka.Vlajka)
                 {
                     Maska[KurzorY, KurzorX] = TypPolicka.Zakryte;
                 }
@@ -168,16 +179,23 @@
             for (int x = 0; x < MinovePole.GetLength(1); x++)
             {
                for (int y = 0; y < MinovePole.GetLength(0); y++)
-                {
-
-                    //if(x && y == )
+                {   
+                    if (MinovePole[y, x] == 0 && Maska[y, x] != TypPolicka.Odkryte)
+                    {
+                        return StavHry.Bezi;
+                    }
+                    
+                    if (MinovePole[y, x] == -1 && Maska[y, x] != TypPolicka.Vlajka )
+                    {
+                      return StavHry.Bezi;
+                    }
                 }
             }
 
             
 
 
-            return StavHry.Bezi;
+            return StavHry.Vyhra;
         }
 
         static void ZobrazitKurzor()
