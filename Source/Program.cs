@@ -19,8 +19,8 @@ namespace Miny
             Prohra,
         }
 
-        static readonly int SirkaHerniPlochy = 3;
-        static readonly int VyskaHerniPlochy = 3;
+        static readonly int SirkaHerniPlochy = 9;
+        static readonly int VyskaHerniPlochy = 9;
 
         static int[,] MinovePole;
         static TypPolicka[,] Maska;
@@ -30,35 +30,8 @@ namespace Miny
 
         static void Main(string[] args)
         {
-            MinovePole = new int[3, 3] {
-                { -1, 1, 0 },
-                { 1, 1, 0 },
-                { 0, 0, 0 }
-            };
-            Maska = new TypPolicka[3, 3] {
-                { TypPolicka.Vlajka, TypPolicka.Odkryte, TypPolicka.Zakryte },
-                { TypPolicka.Zakryte, TypPolicka.Odkryte, TypPolicka.Zakryte },
-                { TypPolicka.Zakryte, TypPolicka.Zakryte, TypPolicka.Zakryte }
-            };
-
-            for (int y = 0; y < 3; y++) 
-            {
-                Console.WriteLine();
-                for(int x= 0; x < 3; x++)
-                {
-                    if (MinovePole[x, y] == -1) Console.Write(" ");
-                    else Console.Write("  ");
-                    Console.Write(MinovePole[x, y]);
-                    
-         
-
-                }
-                    
-            }
-
-            
-
-            System.Environment.Exit(0);
+            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
+            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
             VygenerovatHerniPlochu();
            
@@ -218,7 +191,33 @@ namespace Miny
 
         static void ZobrazitHerniPlochu()
         {
-            throw new NotImplementedException();
+
+            for (int pocitacka_radku = 0; pocitacka_radku < VyskaHerniPlochy; pocitacka_radku++)
+            {
+             
+                Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
+                Console.WriteLine();
+               
+                for (int pocitacka_pozic = 0; pocitacka_pozic < SirkaHerniPlochy; pocitacka_pozic++)
+                {
+                    string znak = "nic";
+                    if(MinovePole[pocitacka_radku, pocitacka_pozic] == -1)
+                    {
+                        znak = "M";
+                    }
+                    else
+                    {
+                        znak = Convert.ToString(MinovePole[pocitacka_radku, pocitacka_pozic]);
+                    }
+                    Console.Write("|"+ znak);
+                }
+                Console.Write("|");
+                Console.WriteLine();
+                
+                
+                
+            
+            }
         }
 
         static void SmazatObrazovku()
