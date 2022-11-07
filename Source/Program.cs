@@ -29,8 +29,6 @@
 
         static void Main(string[] args)
         {
-            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
-
             VygenerovatHerniPlochu();
            
             StavHry stavHry = StavHry.Bezi;
@@ -118,6 +116,9 @@
 
         static void VygenerovatHerniPlochu()
         {
+            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
+            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
+
             Random nahoda = new Random();
             int z = 0;
             while(z<10)
