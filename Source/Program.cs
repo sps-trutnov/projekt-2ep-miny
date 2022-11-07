@@ -90,32 +90,26 @@
                 string[] polozky = lines[i].Split(" ");
                 jmena.Append(polozky[0]);
                 casy.Append(polozky[1]);
-            }
-            Console.WriteLine(jmena);
-            Console.WriteLine(casy);
 
-            int mujCas = 5;
-            int[] tabHracu;
-            tabHracu = new int[] { 1, 2, 3, 6, 9 };
+                string[] hodinyMinutyNeceleSekundy = polozky[1].Split(":");
+                string[] sekundyMilisekundy = hodinyMinutyNeceleSekundy[2].Split(".");
 
-            //   prvni proměnná; jak dlouho; i++ aby se postupně vše projelo
-            for (int i = 0; i < tabHracu.Length; i++)
-            {
-                if (mujCas < tabHracu[i])
-                {
-                    for (int p = i; p < tabHracu.Length - 1; p++)
-                    {
-                        int zachrana = tabHracu[p];
-                        tabHracu[p + 1] = zachrana;
-                    }
-                    tabHracu[i] = mujCas;
-                    break;
-                }
+                Console.WriteLine(hodinyMinutyNeceleSekundy[0]); // hodiny
+                Console.WriteLine(hodinyMinutyNeceleSekundy[1]); // minuty
+                Console.WriteLine(sekundyMilisekundy[0]); // sekundy
+                Console.WriteLine(sekundyMilisekundy[1]); // miliskeundy
+
+                int hodiny = Convert.ToInt32(hodinyMinutyNeceleSekundy[0]);
+                int minuty = Convert.ToInt32(hodinyMinutyNeceleSekundy[1]);
+                int sekundy = Convert.ToInt32(sekundyMilisekundy[0]);
+                int milisekundy = Convert.ToInt32(sekundyMilisekundy[1]);
+
+                TimeSpan dobaHraniHraceVTabulce = new TimeSpan(0, hodiny, minuty, sekundy, milisekundy);
+
+                Console.WriteLine(dobaHraniHraceVTabulce);
+                Console.WriteLine();
             }
-            for (int i = 0; i < tabHracu.Length; i++)
-            {
-                Console.WriteLine(tabHracu[i]);
-            }
+           
 
 
 
@@ -126,7 +120,7 @@
             string[] nejlepsiHraci =
             
             {
-                
+
                 zadani + " " + dobaHry,
             };
 
