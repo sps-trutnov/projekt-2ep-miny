@@ -29,19 +29,7 @@
 
         static void Main(string[] args)
         {
-            MinovePole = new int[4, 3] {
-                {-1, 0, 0 },
-                {0, 0, 0 },
-                {-1, -1, 0 },
-                {-1, 0, 0 },
-            };
-            Maska = new TypPolicka[4, 3]
-            {
-                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
-                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
-                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
-                {TypPolicka.Zakryte, TypPolicka.Zakryte,TypPolicka.Zakryte},
-            };
+            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
             VygenerovatHerniPlochu();
            
