@@ -196,7 +196,7 @@ namespace Miny
             {
              
                 Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
-                Console.WriteLine();
+                
                
                 for (int pocitacka_pozic = 0; pocitacka_pozic < SirkaHerniPlochy; pocitacka_pozic++)
                 {
@@ -218,6 +218,7 @@ namespace Miny
                 
             
             }
+            Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
         }
 
         static void SmazatObrazovku()
