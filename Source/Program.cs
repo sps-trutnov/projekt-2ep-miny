@@ -81,52 +81,66 @@
         static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
         {
             string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
-
             string[] jmena = new string[lines.Length];
             string[] casy = new string[lines.Length];
 
             for (int i = 0; i < lines.Length; i++)
             {
-                string[] polozky = lines[i].Split(" ");
-                jmena.Append(polozky[0]);
-                casy.Append(polozky[1]);
+                string[] polozky = lines[i].Split("\t");
+                jmena[i] = polozky[0];
+                casy[i] = polozky[1];
             }
-            Console.WriteLine(jmena);
-            Console.WriteLine(casy);
-
-            int mujCas = 5;
-            int[] tabHracu;
-            tabHracu = new int[] { 1, 2, 3, 6, 9 };
-
-            //   prvni proměnná; jak dlouho; i++ aby se postupně vše projelo
-            for (int i = 0; i < tabHracu.Length; i++)
+            for (int i = 0; i < casy.Length; i++)
             {
-                if (mujCas < tabHracu[i])
+                string[] hodinyMinutyNeceleSekundy = casy[i].Split(":");
+                string[] sekundyMilisekundy = hodinyMinutyNeceleSekundy[2].Split(".");
+                Console.WriteLine(hodinyMinutyNeceleSekundy[0]); // hodiny
+                Console.WriteLine(hodinyMinutyNeceleSekundy[1]); // minuty
+                Console.WriteLine(sekundyMilisekundy[0]); // sekundy
+                Console.WriteLine(sekundyMilisekundy[1]); // miliskeundy
+
+                int hodiny = Convert.ToInt32(hodinyMinutyNeceleSekundy[0]);
+                int minuty = Convert.ToInt32(hodinyMinutyNeceleSekundy[1]);
+                int sekundy = Convert.ToInt32(sekundyMilisekundy[0]);
+                int milisekundy = Convert.ToInt32(sekundyMilisekundy[1]);
+
+                TimeSpan dobaHraniHraceVTabulce = new TimeSpan(0, hodiny, minuty, sekundy, milisekundy);
+                Console.WriteLine(dobaHraniHraceVTabulce);
+                Console.WriteLine();
+
+                if (dobaHry < dobaHraniHraceVTabulce)
                 {
-                    for (int p = i; p < tabHracu.Length - 1; p++)
+                    string herniCas = Convert.ToString(dobaHry);
+                    Console.WriteLine("->" + herniCas);
+                    for (int p = i; p < casy.Length - 1; p++)
                     {
-                        int zachrana = tabHracu[p];
-                        tabHracu[p + 1] = zachrana;
+                        string zachrana = casy[p];
+                        casy[p + 1] = zachrana;
                     }
-                    tabHracu[i] = mujCas;
+                    casy[i] = herniCas;
                     break;
                 }
             }
-            for (int i = 0; i < tabHracu.Length; i++)
+
+            for (int n = 0; n < casy.Length; n++)
             {
-                Console.WriteLine(tabHracu[i]);
+                Console.WriteLine(casy[n]);
             }
+
+
+            //   prvni proměnná; jak dlouho; i++ aby se postupně vše projelo
+
 
 
 
             Console.Write("Zadejte své jméno: ");
             string zadani = Console.ReadLine();
 
-            
+
             string[] nejlepsiHraci =
-            
+
             {
-                
+
                 zadani + " " + dobaHry,
             };
 
