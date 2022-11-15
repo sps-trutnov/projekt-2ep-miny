@@ -33,8 +33,8 @@
 
             VygenerovatHerniPlochu();
 
-            StavHry stavHry = StavHry.Bezi;
             DateTime casZacatku = DateTime.Now;
+            StavHry stavHry = StavHry.Bezi;
 
             while (stavHry == StavHry.Bezi)
             {
@@ -42,12 +42,17 @@
                 ZobrazitNadpis();
 
                 ZobrazitHerniPlochu();
-                ZobrazitKurzor();
 
                 stavHry = InterakceSUzivatelem();
             }
 
             TimeSpan dobaHry = DateTime.Now - casZacatku;
+
+            OkdrytHerniPlochu();
+            
+            ZobrazitNadpis();
+            ZobrazitHerniPlochu();
+            Console.Read();
 
             ZobrazitTabulkuNejHracu();
             ZobrazitDobuProbehleHry(dobaHry);
@@ -182,10 +187,12 @@
 
         static StavHry InterakceSUzivatelem()
         {
-            Console.Write("Stiskni klávesu");
-            ConsoleKeyInfo klavesa = Console.ReadKey();
-            Console.WriteLine();
+            Console.WriteLine("Šipky = pohyb");
+            Console.WriteLine("Enter = odkrýt");
+            Console.WriteLine("V = vlajka");
 
+            ConsoleKeyInfo klavesa = Console.ReadKey();
+            
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
                 Console.Clear();
@@ -283,13 +290,6 @@
             return StavHry.Vyhra;
         }
 
-        static void ZobrazitKurzor()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.BackgroundColor = ConsoleColor.Green;
-        }
-
         static void ZobrazitHerniPlochu()
         {
             for (int pocitacka_radku = 0; pocitacka_radku < VyskaHerniPlochy; pocitacka_radku++)
@@ -356,6 +356,17 @@
             Console.WriteLine("Stiskněte libovolnou klávesu pro ukončení...");
             Console.CursorVisible = false;
             Console.ReadKey();
+        }
+
+        static void OkdrytHerniPlochu()
+        {
+            for (int x = 0; x < Maska.GetLength(1); x++)
+            {
+                for (int y = 0; y < Maska.GetLength(0); y++)
+                {
+                    Maska[y, x] = TypPolicka.Odkryte;
+                }
+            }
         }
     }
 }
