@@ -24,8 +24,8 @@
         static int[,] MinovePole;
         static TypPolicka[,] Maska;
 
-        static int KurzorX = 0;
-        static int KurzorY = 0;
+        static int KurzorX = 5;
+        static int KurzorY = 6;
 
         static void Main(string[] args)
         {
@@ -116,7 +116,7 @@
 
         static void VygenerovatHerniPlochu()
         {
-            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
+            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
             Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
 
             Random nahoda = new Random();
@@ -138,6 +138,7 @@
                 int x = a % VyskaHerniPlochy;
                 int y = a / SirkaHerniPlochy;
                 if (MinovePole[(x % SirkaHerniPlochy), y] != -1)
+                
                 {
                     if (y != 0 && y % VyskaHerniPlochy != VyskaHerniPlochy - 1)
                     {
@@ -351,12 +352,65 @@
 
         static void ZobrazitKurzor()
         {
-            throw new NotImplementedException();
+            Console.SetCursorPosition(0, 0);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.BackgroundColor = ConsoleColor.Green;
+
+                
         }
 
         static void ZobrazitHerniPlochu()
-        {
-            throw new NotImplementedException();
+        {
+            //Maska[3, 4] = TypPolicka.Vlajka;
+            //Maska[4, 5] = TypPolicka.Zakryte;
+             
+            for (int pocitacka_radku = 0; pocitacka_radku < VyskaHerniPlochy; pocitacka_radku++)
+            {
+             
+                Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
+                
+                              
+                for (int pocitacka_pozic = 0; pocitacka_pozic < SirkaHerniPlochy; pocitacka_pozic++)
+                {
+                    Console.Write("|");
+                    if (KurzorX == pocitacka_pozic && KurzorY == pocitacka_radku)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+
+                    string znak = "nic";
+                    if (Maska[pocitacka_radku, pocitacka_pozic] == TypPolicka.Zakryte)
+                    {
+                        znak = "#";
+                    }
+                    else if (Maska[pocitacka_radku, pocitacka_pozic] == TypPolicka.Vlajka)
+                    {
+                        znak = "F";
+                    }
+                    else if (MinovePole[pocitacka_radku, pocitacka_pozic] == -1)
+                    {
+                        znak = "M";
+                    }
+                    else 
+                    {
+                        znak = Convert.ToString(MinovePole[pocitacka_radku, pocitacka_pozic]);
+                    }
+                    
+
+                    Console.Write(znak);
+                    Console.BackgroundColor = ConsoleColor.White;
+                }
+                Console.Write("|");
+                Console.WriteLine();  
+                
+
+
+            }
+            Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
         }
 
         static void SmazatObrazovku()
