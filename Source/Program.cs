@@ -8,7 +8,6 @@
             Zakryte,
             Odkryte,
             Vlajka,
-            _mina_,
         }
 
         enum StavHry
@@ -29,79 +28,36 @@
 
         static void Main(string[] args)
         {
+            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
+            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
+
             VygenerovatHerniPlochu();
 
             StavHry stavHry = StavHry.Bezi;
+            DateTime casZacatku = DateTime.Now;
+
             while (stavHry == StavHry.Bezi)
             {
-                Console.WriteLine("y:" + KurzorY);
-                Console.WriteLine("x:" + KurzorX);
-                for (int y = 0; y < Maska.GetLength(0); y++)
-                {
-                    for (int x = 0; x < Maska.GetLength(1); x++)
-                    {
-                        Console.Write(Maska[y, x] + " ");
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
+                SmazatObrazovku();
+                ZobrazitNadpis();
+
+                ZobrazitHerniPlochu();
+                ZobrazitKurzor();
 
                 stavHry = InterakceSUzivatelem();
-                if (stavHry == StavHry.Prohra)
-                {
-                    Console.WriteLine("mapa");
-                    for (int y = 0; y < Maska.GetLength(0); y++)
-                    {
-                        for (int x = 0; x < Maska.GetLength(1); x++)
-                        {
-                            Console.Write(Maska[y, x] + " ");
-                        }
-                        Console.WriteLine();
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("odkrytá mapa");
-
-                    for (int x = 0; x < MinovePole.GetLength(1); x++)
-                    {
-                        for (int y = 0; y < MinovePole.GetLength(0); y++)
-                        {
-                            if (MinovePole[y, x] == -1)
-                            {
-                                Maska[y, x] = TypPolicka._mina_;
-                            }
-                            if (MinovePole[y, x] == 0)
-                            {
-                                Maska[y, x] = TypPolicka.Odkryte;
-                            }
-                        }
-                    }
-                    for (int y = 0; y < Maska.GetLength(0); y++)
-                    {
-                        for (int x = 0; x < Maska.GetLength(1); x++)
-                        {
-                            Console.Write(Maska[y, x] + " ");
-                        }
-                        Console.WriteLine();
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("prohra");
-                }
-
-                if (stavHry == StavHry.Vyhra)
-                {
-                    Console.WriteLine("mapa");
-                    for (int y = 0; y < Maska.GetLength(0); y++)
-                    {
-                        for (int x = 0; x < Maska.GetLength(1); x++)
-                        {
-                            Console.Write(Maska[y, x] + " ");
-                        }
-                        Console.WriteLine();
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("Výhra");
-                }
             }
+
+            TimeSpan dobaHry = DateTime.Now - casZacatku;
+
+            ZobrazitTabulkuNejHracu();
+            ZobrazitDobuProbehleHry(dobaHry);
+
+            if (stavHry == StavHry.Vyhra)
+            {
+                ZapisDoTabulkyNejHracu(dobaHry);
+            }
+
+            ZobrazitRozlouceni();
         }
 
         static void VygenerovatHerniPlochu()
