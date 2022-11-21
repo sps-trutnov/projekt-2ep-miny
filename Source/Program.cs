@@ -1,6 +1,6 @@
 ﻿namespace Miny
 {
-    internal class Program
+    class Program
     {
         // vyctovy datovy typ
         enum TypPolicka
@@ -28,9 +28,6 @@
 
         static void Main(string[] args)
         {
-            MinovePole = new int[SirkaHerniPlochy, VyskaHerniPlochy];
-            Maska = new TypPolicka[SirkaHerniPlochy, VyskaHerniPlochy];
-
             VygenerovatHerniPlochu();
 
             DateTime casZacatku = DateTime.Now;
@@ -49,13 +46,14 @@
             TimeSpan dobaHry = DateTime.Now - casZacatku;
 
             OkdrytHerniPlochu();
-            
+
             ZobrazitNadpis();
             ZobrazitHerniPlochu();
             Console.Read();
 
             ZobrazitTabulkuNejHracu();
-            ZobrazitDobuProbehleHry(dobaHry);
+            ZapisDoTabulkyNejHracu(dobaHry);
+            ZobrazitTabulkuNejHracu();
 
             if (stavHry == StavHry.Vyhra)
             {
@@ -170,19 +168,130 @@
             }
         }
 
-        static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
+        static void ZobrazitTabulkuNejHracu()
         {
-            throw new NotImplementedException();
+            string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
+
+            System.Console.WriteLine("Nejlepší hráči: ");
+            int Misto;
+            Misto = 1;
+            foreach (string line in lines)
+            {
+                Console.WriteLine(Misto + ". " + line);
+                Misto = Misto + 1;
+            }
+            Console.WriteLine();
         }
 
         static void ZobrazitDobuProbehleHry(TimeSpan dobaHry)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Hru jsi dohrál za: " + dobaHry);
+            Console.WriteLine();
         }
 
-        static void ZobrazitTabulkuNejHracu()
+        static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
         {
-            throw new NotImplementedException();
+            string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
+            string[] jmena = new string[lines.Length];
+            string[] casy = new string[lines.Length];
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] polozky = lines[i].Split(" ");
+                jmena[i] = polozky[0];
+                casy[i] = polozky[1];
+            }
+
+            for (int i = 0; i < casy.Length; i++)
+            {
+                string[] hodinyMinutyNeceleSekundy = casy[i].Split(":");
+                string[] sekundyMilisekundy = hodinyMinutyNeceleSekundy[2].Split(".");
+                Console.WriteLine(hodinyMinutyNeceleSekundy[0]); // hodiny
+                Console.WriteLine(hodinyMinutyNeceleSekundy[1]); // minuty
+                Console.WriteLine(sekundyMilisekundy[0]); // sekundy
+                Console.WriteLine(sekundyMilisekundy[1]); // miliskeundy
+
+                int hodiny = Convert.ToInt32(hodinyMinutyNeceleSekundy[0]);
+                int minuty = Convert.ToInt32(hodinyMinutyNeceleSekundy[1]);
+                int sekundy = Convert.ToInt32(sekundyMilisekundy[0]);
+                int milisekundy = Convert.ToInt32(sekundyMilisekundy[1]);
+
+                TimeSpan dobaHraniHraceVTabulce = new TimeSpan(0, hodiny, minuty, sekundy, milisekundy);
+                Console.WriteLine(dobaHraniHraceVTabulce);
+                Console.WriteLine();
+
+                if (dobaHry < dobaHraniHraceVTabulce)
+                {
+                    string herniCas = dobaHry.ToString();
+                    Console.WriteLine("->" + herniCas);
+                    for (int p = casy.Length - 2; p >= i; p--)
+                    {
+                        casy[p + 1] = casy[p];
+                        jmena[p + 1] = jmena[p];
+                    }
+                    casy[i] = herniCas;
+                    Console.Write("Zadejte své jméno: ");
+                    string zadani = Console.ReadLine();
+                    jmena[i] = zadani;
+                    string[] nejlepsiHraci = new string[casy.Length];
+                    for (int k = 0; k < casy.Length; k++)
+                    {
+                        nejlepsiHraci[k] = jmena[k] + " " + casy[k];
+                    }
+                    for (int n = 0; n < casy.Length; n++)
+                    {
+                        Console.WriteLine(jmena[n] + casy[n]);
+                    }
+                    Console.WriteLine(nejlepsiHraci);
+                    File.WriteAllLines(@"TabulkaNejHracu.txt", nejlepsiHraci);
+                    break;
+                }
+            }
+        }
+
+        static void ZobrazitHerniPlochu()
+        {
+            for (int pocitacka_radku = 0; pocitacka_radku < VyskaHerniPlochy; pocitacka_radku++)
+            {
+                Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
+
+                for (int pocitacka_pozic = 0; pocitacka_pozic < SirkaHerniPlochy; pocitacka_pozic++)
+                {
+                    Console.Write("|");
+
+                    if (KurzorX == pocitacka_pozic && KurzorY == pocitacka_radku)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+
+                    string znak;
+                    if (Maska[pocitacka_radku, pocitacka_pozic] == TypPolicka.Zakryte)
+                    {
+                        znak = "#";
+                    }
+                    else if (Maska[pocitacka_radku, pocitacka_pozic] == TypPolicka.Vlajka)
+                    {
+                        znak = "F";
+                    }
+                    else if (MinovePole[pocitacka_radku, pocitacka_pozic] == -1)
+                    {
+                        znak = "M";
+                    }
+                    else
+                    {
+                        znak = Convert.ToString(MinovePole[pocitacka_radku, pocitacka_pozic]);
+                    }
+                    Console.Write(znak);
+                    Console.BackgroundColor = ConsoleColor.White;
+                }
+                Console.Write("|");
+                Console.WriteLine();
+            }
+            Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
         }
 
         static StavHry InterakceSUzivatelem()
@@ -192,7 +301,7 @@
             Console.WriteLine("V = vlajka");
 
             ConsoleKeyInfo klavesa = Console.ReadKey();
-            
+
             if (klavesa.Key == ConsoleKey.RightArrow)
             {
                 Console.Clear();
@@ -288,51 +397,6 @@
             }
 
             return StavHry.Vyhra;
-        }
-
-        static void ZobrazitHerniPlochu()
-        {
-            for (int pocitacka_radku = 0; pocitacka_radku < VyskaHerniPlochy; pocitacka_radku++)
-            {
-                Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
-
-                for (int pocitacka_pozic = 0; pocitacka_pozic < SirkaHerniPlochy; pocitacka_pozic++)
-                {
-                    Console.Write("|");
-
-                    if (KurzorX == pocitacka_pozic && KurzorY == pocitacka_radku)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                    }
-                    else
-                    {
-                        Console.BackgroundColor = ConsoleColor.White;
-                    }
-
-                    string znak;
-                    if (Maska[pocitacka_radku, pocitacka_pozic] == TypPolicka.Zakryte)
-                    {
-                        znak = "#";
-                    }
-                    else if (Maska[pocitacka_radku, pocitacka_pozic] == TypPolicka.Vlajka)
-                    {
-                        znak = "F";
-                    }
-                    else if (MinovePole[pocitacka_radku, pocitacka_pozic] == -1)
-                    {
-                        znak = "M";
-                    }
-                    else
-                    {
-                        znak = Convert.ToString(MinovePole[pocitacka_radku, pocitacka_pozic]);
-                    }
-                    Console.Write(znak);
-                    Console.BackgroundColor = ConsoleColor.White;
-                }
-                Console.Write("|");
-                Console.WriteLine();
-            }
-            Console.WriteLine("+-+-+-+-+-+-+-+-+-+");
         }
 
         static void SmazatObrazovku()
