@@ -86,7 +86,7 @@
 
             for (int i = 0; i < lines.Length; i++)
             {
-                string[] polozky = lines[i].Split("\t");
+                string[] polozky = lines[i].Split(" ");
                 jmena[i] = polozky[0];
                 casy[i] = polozky[1];
             }
@@ -110,41 +110,43 @@
 
                 if (dobaHry < dobaHraniHraceVTabulce)
                 {
-                    string herniCas = Convert.ToString(dobaHry);
+                    string herniCas = dobaHry.ToString();
                     Console.WriteLine("->" + herniCas);
-                    for (int p = i; p < casy.Length - 1; p++)
+                    for (int p = casy.Length - 2; p >= i; p--)
                     {
-                        string zachrana = casy[p];
-                        casy[p + 1] = zachrana;
+                        casy[p + 1] = casy[p];
+                        jmena[p + 1] = jmena[p];
                     }
                     casy[i] = herniCas;
+                    Console.Write("Zadejte své jméno: ");
+                    string zadani = Console.ReadLine();
+                    jmena[i] = zadani;
+                    string[] nejlepsiHraci = new string[casy.Length];
+                    for (int k = 0; k < casy.Length; k++)
+                    {
+                        nejlepsiHraci[k] = jmena[k] + " " + casy[k];
+                    }
+                    for (int n = 0; n < casy.Length; n++)
+                    {
+                        Console.WriteLine(jmena[n] + casy[n]);
+                    }
+                    Console.WriteLine(nejlepsiHraci);
+                    File.WriteAllLines(@"TabulkaNejHracu.txt", nejlepsiHraci);
                     break;
                 }
-            }
 
-            for (int n = 0; n < casy.Length; n++)
-            {
-                Console.WriteLine(casy[n]);
             }
+            
+
+
 
 
             //   prvni proměnná; jak dlouho; i++ aby se postupně vše projelo
 
+            
 
 
 
-            Console.Write("Zadejte své jméno: ");
-            string zadani = Console.ReadLine();
-
-
-            string[] nejlepsiHraci =
-
-            {
-
-                zadani + " " + dobaHry,
-            };
-
-            File.WriteAllLines(@"TabulkaNejHracu.txt", nejlepsiHraci);
         }
 
         static void SmazatObrazovku()
