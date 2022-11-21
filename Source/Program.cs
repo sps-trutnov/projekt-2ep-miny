@@ -52,8 +52,6 @@
             Console.Read();
 
             ZobrazitTabulkuNejHracu();
-            ZapisDoTabulkyNejHracu(dobaHry);
-            ZobrazitTabulkuNejHracu();
 
             if (stavHry == StavHry.Vyhra)
             {
@@ -191,7 +189,7 @@
 
         static void ZapisDoTabulkyNejHracu(TimeSpan dobaHry)
         {
-            string[] lines = System.IO.File.ReadAllLines(@"TabulkaNejHracu.txt");
+            string[] lines = File.ReadAllLines(@"TabulkaNejHracu.txt");
             string[] jmena = new string[lines.Length];
             string[] casy = new string[lines.Length];
 
@@ -206,10 +204,6 @@
             {
                 string[] hodinyMinutyNeceleSekundy = casy[i].Split(":");
                 string[] sekundyMilisekundy = hodinyMinutyNeceleSekundy[2].Split(".");
-                Console.WriteLine(hodinyMinutyNeceleSekundy[0]); // hodiny
-                Console.WriteLine(hodinyMinutyNeceleSekundy[1]); // minuty
-                Console.WriteLine(sekundyMilisekundy[0]); // sekundy
-                Console.WriteLine(sekundyMilisekundy[1]); // miliskeundy
 
                 int hodiny = Convert.ToInt32(hodinyMinutyNeceleSekundy[0]);
                 int minuty = Convert.ToInt32(hodinyMinutyNeceleSekundy[1]);
@@ -217,32 +211,28 @@
                 int milisekundy = Convert.ToInt32(sekundyMilisekundy[1]);
 
                 TimeSpan dobaHraniHraceVTabulce = new TimeSpan(0, hodiny, minuty, sekundy, milisekundy);
-                Console.WriteLine(dobaHraniHraceVTabulce);
-                Console.WriteLine();
 
                 if (dobaHry < dobaHraniHraceVTabulce)
                 {
                     string herniCas = dobaHry.ToString();
-                    Console.WriteLine("->" + herniCas);
+
                     for (int p = casy.Length - 2; p >= i; p--)
                     {
                         casy[p + 1] = casy[p];
                         jmena[p + 1] = jmena[p];
                     }
                     casy[i] = herniCas;
+
                     Console.Write("Zadejte své jméno: ");
                     string zadani = Console.ReadLine();
                     jmena[i] = zadani;
+
                     string[] nejlepsiHraci = new string[casy.Length];
                     for (int k = 0; k < casy.Length; k++)
                     {
                         nejlepsiHraci[k] = jmena[k] + " " + casy[k];
                     }
-                    for (int n = 0; n < casy.Length; n++)
-                    {
-                        Console.WriteLine(jmena[n] + casy[n]);
-                    }
-                    Console.WriteLine(nejlepsiHraci);
+
                     File.WriteAllLines(@"TabulkaNejHracu.txt", nejlepsiHraci);
                     break;
                 }
