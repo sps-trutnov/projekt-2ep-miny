@@ -1,4 +1,4 @@
-namespace Miny
+﻿namespace Miny
 {
     class Program
     {
@@ -51,12 +51,20 @@ namespace Miny
 
             ZobrazitNadpis();
             ZobrazitHerniPlochu();
-            Console.Read();
 
+            Console.WriteLine();
+            Console.WriteLine($"Hra skončila {(stavHry == StavHry.Vyhra ? "výhrou" : "prohrou")}.");
+            Console.WriteLine();
+            Console.WriteLine("Stiskněte <ENTER> pro pokračování...");
+            Console.ReadLine();
+            Console.Clear();
+
+            ZobrazitNadpis();
             ZobrazitTabulkuNejHracu();
 
             if (stavHry == StavHry.Vyhra)
             {
+                ZobrazitDobuProbehleHry(dobaHry);
                 ZapisDoTabulkyNejHracu(dobaHry);
             }
 
@@ -83,7 +91,6 @@ namespace Miny
 
             for (int a = 0; a < MinovePole.Length; a++)
             {
-
                 int x = a % VyskaHerniPlochy;
                 int y = a / SirkaHerniPlochy;
                 if (MinovePole[(x % SirkaHerniPlochy), y] != -1)
@@ -407,6 +414,7 @@ namespace Miny
 
         static void ZobrazitRozlouceni()
         {
+            Console.WriteLine();
             Console.WriteLine("Děkujeme za zahrání!");
             Console.WriteLine();
             Console.WriteLine("Stiskněte libovolnou klávesu pro ukončení...");
