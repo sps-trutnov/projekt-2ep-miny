@@ -1,4 +1,4 @@
-﻿namespace Miny
+namespace Miny
 {
     class Program
     {
@@ -19,6 +19,8 @@
 
         static readonly int SirkaHerniPlochy = 9;
         static readonly int VyskaHerniPlochy = 9;
+
+        static readonly int PocetMin = 10;
 
         static int[,] MinovePole;
         static TypPolicka[,] Maska;
@@ -68,7 +70,7 @@
 
             Random nahoda = new Random();
             int z = 0;
-            while (z < 10)
+            while (z < PocetMin)
             {
                 int Random_x = nahoda.Next(MinovePole.GetLength(0));
                 int Random_y = nahoda.Next(MinovePole.GetLength(1));
